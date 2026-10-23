@@ -33,3 +33,13 @@ Three Fiber owns mesh rotation and cursor damping. GSAP owns scroll progress on 
 `npm run build` runs TypeScript and produces the static production bundle. Browser checks cover desktop and mobile layouts, real WebGL canvas rendering, navigation and mobile drawer, all category filters, all nine editable projects, modal next/previous/Escape and focus restoration, skill expansion, contact validation, mailto fallback, clipboard, and reduced-motion mode. Final assets and server responses can be checked with `npm run preview`.
 
 No contact delivery is possible without the visitor sending the draft in their email app. Final project media and real external project/profile links remain content additions for the owner.
+
+## Deploy to Netlify
+
+Import `SHAIK20-del/3d_portfolio` from GitHub and deploy the `main` branch. The committed `netlify.toml` sets the build command (`npm run build`), publish directory (`dist`), and Node/npm versions. Leave the base directory at the repository root. No environment variables or secrets are required.
+
+For a manual deployment, run `npm ci` and `npm run build`, then upload **the generated `dist` folder** to Netlify Drop. Uploading the repository root will serve the source `index.html`, which references TypeScript that a static host cannot execute. The source favicon also lives under `public/`; Vite copies it to the root of `dist` during the build.
+
+If the browser reports a module MIME type of `application/octet-stream` and a missing `/favicon.svg`, inspect the deployed HTML. It must reference `assets/index-*.js`, not `/src/main.tsx`. In Netlify, confirm that the latest deployment uses the committed configuration, with no base directory pointing elsewhere, and redeploy the latest `main` commit. Do not change MIME headers to serve TypeScript as JavaScript; deploy the compiled output instead.
+
+Run `npm run test:deployment` to build and verify that the publish folder includes compiled entry points, local assets, and the favicon, with no source TypeScript referenced by the deployed page. Asset paths are relative, so the built files also work from a static-host subdirectory.

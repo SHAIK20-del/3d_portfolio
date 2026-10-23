@@ -1,0 +1,8 @@
+# Netlify must build the Vite application and serve its output, not the source tree.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+  NPM_VERSION = "11"
